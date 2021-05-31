@@ -120,21 +120,6 @@ function Loader( editor ) {
 
 				break;
 
-			case 'ifc':
-				reader.addEventListener( 'load', async function ( event ) {
-
-					var  {IFCLoader}  = await import( '../../examples/jsm/loaders/IfcLoader' );
-
-					var loader = new IFCLoader();
-					var object = loader.parse( event.target.result );
-
-					editor.execute( new AddObjectCommand( editor, object ) );
-
-				}, false );
-				reader.readAsArrayBuffer( file );
-
-				break;
-
 
 			case '3mf':
 
@@ -375,6 +360,26 @@ function Loader( editor ) {
 				reader.readAsText( file );
 
 				break;
+
+
+
+				case 'ifc':
+
+					reader.addEventListener( 'load', async function ( event ) {
+	
+						var { IFCLoader } = await import( '../../examples/jsm/loaders/IFCLoader.js' );
+	
+						var loader = new IFCLoader();
+						var scene = await loader.parse( event.target.result );
+	
+						scene.name = filename;
+	
+						editor.execute( new AddObjectCommand( editor, scene ) );
+	
+					}, false );
+					reader.readAsArrayBuffer( file );
+	
+					break;
 
 
 			case 'kmz':

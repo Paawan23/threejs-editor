@@ -110,6 +110,7 @@
     "directories": {}
   },
   "dependencies": {
+    "http-server": "^0.12.3",
     "web-ifc": "0.0.14"
   }
 }
